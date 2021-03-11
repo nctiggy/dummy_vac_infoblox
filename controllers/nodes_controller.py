@@ -10,7 +10,7 @@ init_cur.execute("CREATE TABLE IF NOT EXISTS nodes ("
     "fqdn text,"
     "serviceTag text,"
     "hostName text,"
-    "status text PRIMARY KEY"))
+    "status text PRIMARY KEY)")
 init_con.commit()
 
 def add_node(body):  # noqa: E501
