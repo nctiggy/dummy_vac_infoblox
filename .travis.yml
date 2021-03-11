@@ -5,8 +5,9 @@ services:
 
 before_install:
   - docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate -i /local/swagger.yaml -l python-flask -o /local/server
-  - cp -f controllers/*py server/swagger_server/controllers
-  - cp requirements.txt server/requirements.txt
+  - ls -R
+  - sudo cp -f controllers/*py server/swagger_server/controllers
+  - sudo cp requirements.txt server/requirements.txt
   - cd server
   - echo $DOCKER_PASSWORD | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t nctiggy/fake_vac .
