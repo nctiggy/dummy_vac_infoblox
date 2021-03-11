@@ -6,8 +6,11 @@ from swagger_server.models.node import Node  # noqa: E501
 db_name = 'nodes.db'
 init_con = sqlite3.connect(db_name)
 init_cur = init_con.cursor()
-init_cur.execute("CREATE TABLE nodes(fqdn text, serviceTag text, "
-                 "hostName text, status text PRIMARY KEY(serviceTag)")
+init_cur.execute("CREATE TABLE IF NOT EXISTS nodes ("
+    "fqdn text,"
+    "serviceTag text,"
+    "hostName text,"
+    "status text PRIMARY KEY"))
 init_con.commit()
 
 def add_node(body):  # noqa: E501
