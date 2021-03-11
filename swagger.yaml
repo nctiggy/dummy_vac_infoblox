@@ -1,0 +1,159 @@
+swagger: "2.0"
+info:
+  description: "This is an inaccurate mockup of the SBUX VAC"
+  version: "0.0.1"
+  title: "Fake VAC and InfoBlox"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "craig.j.smith@dell.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+basePath: "/v2"
+tags:
+- name: "nodes"
+  description: "node entries"
+- name: "ip"
+  description: "Get an IP from the pool"
+schemes:
+- "https"
+- "http"
+paths:
+  /nodes:
+    post:
+      tags:
+      - "nodes"
+      summary: "Add a new node"
+      description: ""
+      operationId: "addNode"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Node object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Node"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Node"
+        "405":
+          description: "Invalid input"
+        "500":
+          description: "Node not created"
+    get:
+      tags:
+      - "nodes"
+      summary: "Get all nodes"
+      description: ""
+      operationId: "getNodes"
+      produces:
+      - "application/json"
+      responses:
+        "400":
+          description: "Invalid call"
+  /nodes/{serviceTag}:
+    get:
+      tags:
+      - "nodes"
+      summary: "Find node by serviceTag"
+      description: "Returns a single node"
+      operationId: "getNodeByServiceTag"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "serviceTag"
+        in: "path"
+        description: "serviceTag of node to return"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Node"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Node not found"
+    put:
+      tags:
+      - "nodes"
+      summary: "Updates a pet in the store with form data"
+      description: ""
+      operationId: "updateNode"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "serviceTag"
+        in: "path"
+        description: "serviceTag of node that needs to be updated"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Node object that needs to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/Node"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Node"
+        "405":
+          description: "Invalid input"
+    delete:
+      tags:
+      - "nodes"
+      summary: "Deletes a node"
+      description: ""
+      operationId: "deleteNode"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "serviceTag"
+        in: "path"
+        description: "Node serviceTag to delete"
+        required: true
+        type: "string"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Node not found"
+definitions:
+  Node:
+    type: "object"
+    required:
+    - "serviceTag"
+    - "hostName"
+    - "fqdn"
+    properties:
+      serviceTag:
+        type: "string"
+        example: "hj5324j"
+      hostName:
+        type: "string"
+        example: "beep"
+      fqdn:
+        type: "string"
+        example: "beep.home.net"
+      status:
+        type: "string"
+        description: "node status"
+        enum:
+        - "processing"
+        - "deploying"
+        - "production"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
