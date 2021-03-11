@@ -7,10 +7,10 @@ db_name = 'nodes.db'
 init_con = sqlite3.connect(db_name)
 init_cur = init_con.cursor()
 init_cur.execute("CREATE TABLE IF NOT EXISTS nodes ("
-    "fqdn text,"
-    "serviceTag text,"
-    "hostName text,"
-    "status text PRIMARY KEY)")
+                 "fqdn text,"
+                 "serviceTag text PRIMARY KEY,"
+                 "hostName text,"
+                 "status text)")
 init_con.commit()
 
 def add_node(body):  # noqa: E501
