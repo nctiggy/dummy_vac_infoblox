@@ -8,7 +8,7 @@ before_install:
   - docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate -i /local/swagger.yaml -l python-flask -o /local/server
   - sudo cp -f controllers/*py server/swagger_server/controllers
   - sudo cp requirements.txt server/requirements.txt
-  - sudo sed -i '/^FROM/aRUN\ apk\ --no-cache\ install\ curl' server/Dockerfile
+  - sudo sed -i '/^FROM/aRUN\ apk\ --no-cache\ add\ curl' server/Dockerfile
   - cd server
   - docker build -t nctiggy/fake_vac .
 script:
