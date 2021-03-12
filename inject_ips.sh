@@ -14,8 +14,6 @@ function get_last {
 low=`get_last $IP_POOL_LOW`
 high=`get_last $IP_POOL_HIGH`
 
-sleep 10
-
 for i in $(seq $low $high)
 do
   ip="192.168.0.${i}"

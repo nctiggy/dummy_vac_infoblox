@@ -85,7 +85,7 @@ paths:
     put:
       tags:
       - "nodes"
-      summary: "Updates a pet in the store with form data"
+      summary: "Updates a node"
       description: ""
       operationId: "updateNode"
       consumes:
