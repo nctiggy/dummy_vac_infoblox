@@ -9,7 +9,6 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "localhost:8080"
 basePath: "/v2"
 tags:
 - name: "nodes"
@@ -202,6 +201,21 @@ definitions:
       hostName:
         type: "string"
         example: "beep"
+      vCenter:
+        type: "string"
+        example: "vcenter.node.net"
+      clusterName:
+        type: "string"
+        example: "cluster-1"
+      vendor:
+        type: "string"
+        example: "Dell"
+      idracIp:
+        type: "string"
+        example: "10.10.1.1"
+      hostIp:
+        type: "string"
+        example: "10.10.10.1"
       fqdn:
         type: "string"
         example: "beep.home.net"

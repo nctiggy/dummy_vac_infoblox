@@ -13,10 +13,13 @@ function get_last {
 
 low=`get_last $IP_POOL_LOW`
 high=`get_last $IP_POOL_HIGH`
+a=`echo "$((${-+"(${IP_POOL_LOW//./"+256*("}))))"}&255))"`
+b=`echo "$((${-+"(${IP_POOL_LOW//./"+256*("}))))"}>>8&255))"`
+c=`echo "$((${-+"(${IP_POOL_LOW//./"+256*("}))))"}>>16&255))"`
 
 for i in $(seq $low $high)
 do
-  ip="192.168.0.${i}"
+  ip="${a}.${b}.${c}.${i}"
   echo $ip
   json='{"address": "'"${ip}"'"}'
   echo $json

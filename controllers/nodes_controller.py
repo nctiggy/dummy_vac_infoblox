@@ -10,7 +10,12 @@ init_cur.execute("CREATE TABLE IF NOT EXISTS nodes ("
                  "fqdn text,"
                  "serviceTag text PRIMARY KEY,"
                  "hostName text,"
-                 "status text)")
+                 "status text,"
+                 "vCenter text,"
+                 "clusterName text,"
+                 "vendor text,"
+                 "idracIp text,"
+                 "hostIp text)")
 init_con.commit()
 
 def add_node(body):  # noqa: E501
@@ -37,7 +42,12 @@ def add_node(body):  # noqa: E501
             cur.execute(f"INSERT INTO nodes VALUES ('{body.fqdn}',"
                         f"'{body.service_tag}',"
                         f"'{body.host_name}',"
-                        "'unknown')")
+                        f"'{body.status}',"
+                        f"'{body.v_center}',"
+                        f"'{body.cluster_name}',"
+                        f"'{body.vendor}',"
+                        f"'{body.idrac_ip}',"
+                        f"'{body.host_ip}')")
             con.commit()
             select = cur.execute("SELECT * FROM nodes WHERE "
                                  f"serviceTag='{body.service_tag}'")
@@ -122,7 +132,8 @@ def update_node(serviceTag, body):  # noqa: E501
             con.row_factory = dict_factory
             cur = con.cursor()
             cur.execute(f"UPDATE nodes SET fqdn = '{body.fqdn}',"
-                        f"hostName = '{body.host_name}'"
+                        f"hostName = '{body.host_name}',"
+                        f"status = '{body.status}'"
                         f"WHERE serviceTag = '{serviceTag}'")
             con.commit()
             select = cur.execute("SELECT * FROM nodes WHERE "

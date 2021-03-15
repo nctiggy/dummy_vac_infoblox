@@ -12,8 +12,8 @@ services:
   ipPool:
     image: curlimages/curl
     environment:
-      IP_POOL_LOW: "192.168.0.99"
-      IP_POOL_HIGH: "192.168.0.105"
+      IP_POOL_LOW: "197.18.10.99"
+      IP_POOL_HIGH: "197.18.10.105"
     volumes:
       - "./inject_ips.sh:/inject_ips.sh"
     command: ["sh", "/inject_ips.sh"]
