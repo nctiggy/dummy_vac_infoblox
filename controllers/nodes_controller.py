@@ -109,7 +109,8 @@ def get_nodes(status=None):  # noqa: E501
         con.row_factory = dict_factory
         cur = con.cursor()
         if status:
-            select = cur.execute("SELECT * FROM nodes WHERE status='{status}'")
+            select = cur.execute("SELECT * FROM nodes "
+                                 f"WHERE status='{status}'")
         else:
             select = cur.execute("SELECT * FROM nodes")
         result = select.fetchall()
