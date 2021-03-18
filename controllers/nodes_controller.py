@@ -133,6 +133,8 @@ def update_node(serviceTag, body):  # noqa: E501
         body = Node.from_dict(connexion.request.get_json())  # noqa: E501
     attributes = [a for a in dir(body) if not a.startswith('__')
                   and not callable(getattr(body, a))]
+    print("this is doing stuff")
+    print(attributes)
     i = 0
     updates = ""
     for attribute in attributes:
@@ -143,6 +145,7 @@ def update_node(serviceTag, body):  # noqa: E501
         else:
             updates = f"{updates}, {cam_attr} = '{attr_value}'"
         i += 1
+    print(updates)
     try:
         with sqlite3.connect(db_name) as con:
             con.row_factory = dict_factory
