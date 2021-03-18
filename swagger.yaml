@@ -172,6 +172,18 @@ paths:
       responses:
         "400":
           description: "Invalid call"
+  /next_ip:
+    get:
+      tags:
+      - "ip"
+      summary: "Get and remove ip"
+      description: "get the next IP and remove it from the list"
+      operationId: "nextIp"
+      produces:
+      - "application/json"
+      responses:
+        "400":
+          description: "Invalid call"
   /ips/{address}:
     delete:
       tags:

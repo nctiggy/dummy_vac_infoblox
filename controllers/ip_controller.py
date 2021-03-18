@@ -58,6 +58,7 @@ def delete_ip(address):  # noqa: E501
         cur = con.cursor()
         select = cur.execute("DELETE FROM ips "
                              f"WHERE address='{address}'")
+        con.commit()
         result = select.fetchone()
     return result
 
@@ -75,6 +76,23 @@ def get_ips():  # noqa: E501
         cur = con.cursor()
         select = cur.execute("SELECT * FROM ips")
         result = select.fetchall()
+    return result
+
+
+def next_ip():
+    """Get all next IP
+
+     # noqa: E501
+
+
+    :rtype: None
+    """
+    with sqlite3.connect(db_name) as con:
+        con.row_factory = dict_factory
+        cur = con.cursor()
+        select = cur.execute("SELECT * FROM ips")
+        result = select.fetchone()
+        delete_ip(result['address'])
     return result
 
 

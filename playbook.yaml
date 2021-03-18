@@ -1,2 +1,24 @@
-tasks:
-  - name:
+---
+- name: Deploy a new cluster
+  connection: local
+  gather_facts: false
+  hosts: localhost
+  tasks:
+    - name: Get Hosts from VAC
+      uri:
+        url: http://localhost:8080/v2/nodes?status=processing
+        return_content: yes
+      register: host_list
+
+
+
+    - name: Debug
+      debug:
+        var: host_list
+
+
+
+    - name: Debug
+      debug:
+        var: item['serviceTag']
+      loop: "{{ host_list.json }}"
