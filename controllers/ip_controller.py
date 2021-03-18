@@ -92,7 +92,9 @@ def next_ip():
         cur = con.cursor()
         select = cur.execute("SELECT * FROM ips")
         result = select.fetchone()
-    delete_ip(result['address'])
+        delete = cur.execute("DELETE FROM ips "
+                             f"WHERE address='{address}'")
+        con.commit()
     return result
 
 
