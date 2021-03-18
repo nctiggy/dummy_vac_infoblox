@@ -131,6 +131,7 @@ def update_node(serviceTag, body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Node.from_dict(connexion.request.get_json())  # noqa: E501
+    print(body.__dict__)
     try:
         with sqlite3.connect(db_name) as con:
             con.row_factory = dict_factory
