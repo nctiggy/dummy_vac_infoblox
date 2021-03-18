@@ -131,14 +131,23 @@ def update_node(serviceTag, body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Node.from_dict(connexion.request.get_json())  # noqa: E501
-    print(body.__dict__)
+    attributes = [a for a in dir(body) if not a.startswith('__')
+                  and not callable(getattr(body, a))]
+    i = 0
+    updates = ""
+    for attribute in attributes:
+        cam_attr = conv_to_cam(attribute)
+        attr_value = getattr(body, attribute)
+        if i == 0:
+            updates = f"{cam_attr} = '{attr_value}'"
+        else:
+            updates = f"{updates}, {cam_attr} = '{attr_value}'"
+        i += 1
     try:
         with sqlite3.connect(db_name) as con:
             con.row_factory = dict_factory
             cur = con.cursor()
-            cur.execute(f"UPDATE nodes SET fqdn = '{body.fqdn}',"
-                        f"hostName = '{body.host_name}',"
-                        f"status = '{body.status}'"
+            cur.execute(f"UPDATE nodes SET {updates}"
                         f"WHERE serviceTag = '{serviceTag}'")
             con.commit()
             select = cur.execute("SELECT * FROM nodes WHERE "
@@ -149,6 +158,12 @@ def update_node(serviceTag, body):  # noqa: E501
     if not result:
         return {"error": "Node not created"}, 500
     return result
+
+
+def conv_to_cam(orig_str):
+    init, *temp = orig_str.split('_')
+    res = ''.join([init.lower(), *map(str.title, temp)])
+    return res
 
 
 def dict_factory(cursor, row):
