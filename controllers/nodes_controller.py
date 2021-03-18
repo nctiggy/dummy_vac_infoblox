@@ -1,8 +1,10 @@
 import connexion
 import sqlite3
+import logging
 from swagger_server.models.node import Node  # noqa: E501
 
 
+logger = logging.getLogger(__name__)
 db_name = 'nodes.db'
 init_con = sqlite3.connect(db_name)
 init_cur = init_con.cursor()
@@ -133,8 +135,7 @@ def update_node(serviceTag, body):  # noqa: E501
         body = Node.from_dict(connexion.request.get_json())  # noqa: E501
     attributes = [a for a in dir(body) if not a.startswith('__')
                   and not callable(getattr(body, a))]
-    print("this is doing stuff")
-    print(attributes)
+    logger.error(attributes)
     i = 0
     updates = ""
     for attribute in attributes:
@@ -145,7 +146,7 @@ def update_node(serviceTag, body):  # noqa: E501
         else:
             updates = f"{updates}, {cam_attr} = '{attr_value}'"
         i += 1
-    print(updates)
+    logger.error(updates)
     try:
         with sqlite3.connect(db_name) as con:
             con.row_factory = dict_factory
